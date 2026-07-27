@@ -22,6 +22,5 @@
     "compression",
     "memory-compression"
   ],
-  "hooks": "./hooks/hooks.json",
   "commands": ["./commands"]
 }
