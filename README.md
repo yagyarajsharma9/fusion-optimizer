@@ -216,6 +216,22 @@ The developer just codes normally — the plugin silently optimizes every sessio
                                 └────────────────────────────────┘
 ```
 
+### 🧠 Auto Model Routing — Per-Prompt, Not Per-Project
+
+> **Even on the most complex project, simple tasks use cheap models.** Auto-switching happens on EVERY prompt, independently of project complexity.
+
+```
+  Complex Project: "Enterprise Microservice Migration"
+  ───────────────────────────────────────────────────
+  "rename UserService.ts"  → ZEN → Haiku   ($0.001)
+  "add OAuth middleware"   → BAL → Sonnet  ($0.02)
+  "design DB sharding"     → QUAL → Opus   ($0.30)
+  "fix typo in README"     → ZEN → Haiku   ($0.001)
+  "refactor auth tests"    → BAL → Sonnet  ($0.02)
+  ───────────────────────────────────────────────────
+  Total: $0.37 (vs $1.65 if all Opus) → 78% saved
+```
+
 ### 🧠 Auto Model Routing — Right Model, Right Price
 
 ```

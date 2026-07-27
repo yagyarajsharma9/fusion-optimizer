@@ -102,21 +102,39 @@ if (setupNeeded) {
 ╔══════════════════════════════════════════════════╗
 ║  🚀 FUSION OPTIMIZER — FIRST-TIME SETUP          ║
 ╠══════════════════════════════════════════════════╣
-║  Default models selected:                        ║
-║    ZEN     → Haiku  (claude-haiku-4-5)           ║
-║    BALANCED → Sonnet (claude-sonnet-5)            ║
-║    QUALITY → Opus   (claude-opus-4-8)            ║
+║  Auto model switching is ready. Here's how:       ║
+║                                                  ║
+║  Simple task ("rename X") → ZEN → Haiku          ║
+║  Feature task ("add API") → BALANCED → Sonnet     ║
+║  Complex task ("design DB") → QUALITY → Opus      ║
+║                                                  ║
+║  This happens PER PROMPT — even on complex        ║
+║  projects, simple tasks use cheap models.         ║
+║                                                  ║
+║  Default models:                                  ║
+║    ZEN:     Haiku  (claude-haiku-4-5)             ║
+║    BALANCED: Sonnet (claude-sonnet-5)              ║
+║    QUALITY:  Opus   (claude-opus-4-8)             ║
 ╠══════════════════════════════════════════════════╣
-║  To accept defaults: type "accept models"         ║
-║  To change: type "/fusion-setup"                  ║
-║  This setup appears ONCE. After today,            ║
-║  Fusion remembers your choices forever.           ║
+║  Type "accept models" to use defaults             ║
+║  Type "/fusion-setup" to customize               ║
+║  One-time setup. Chosen forever.                  ║
 ╚══════════════════════════════════════════════════╝
 
-ASK THE USER NOW: "Welcome to Fusion Optimizer! Which
-models would you like me to use? Defaults above — accept
+ASK THE USER NOW: "Which models should I use
+for each task tier? Defaults above — accept
 or customize?"
 </fusion-setup>`;
+} else if (modelConfig && modelConfig.setup_complete) {
+  // Inject model config so agent knows which models to use
+  contextBlock += `
+<fusion-models>
+ZEN model:     ${modelConfig.zen.model} (${modelConfig.zen.label})
+BALANCED model: ${modelConfig.balanced.model} (${modelConfig.balanced.label})
+QUALITY model:  ${modelConfig.quality.model} (${modelConfig.quality.label})
+MAIN model:    ${modelConfig.main.model}
+Config: .fusion/model-config.json | Change: /fusion-setup
+</fusion-models>`;
 }
 
 process.stdout.write(JSON.stringify({

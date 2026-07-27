@@ -8,7 +8,43 @@ mode: always
 
 ## Core Rule
 
-**Never pay Opus rates for Haiku work.** For every task, auto-dispatch to the cheapest model that can succeed.
+**Never pay Opus rates for Haiku work.** Every task auto-dispatches to the cheapest model that can succeed. Even on complex projects — simple tasks use cheap models. Auto-selection happens per prompt, not per project.
+
+## How Auto-Switching Works (Even on Complex Projects)
+
+```
+Project: "Enterprise Microservice Migration" (COMPLEX project, QUALITY mode)
+    │
+    ├── User: "rename UserService to AccountService"
+    │   → Per-prompt detection: TRIVIAL
+    │   → Mode switches to ZEN (temporarily)
+    │   → Dispatched to fusion-zen-agent (Haiku) ← CHEAP!
+    │   → 3 seconds, $0.001
+    │
+    ├── User: "add OAuth middleware to auth.ts"
+    │   → Per-prompt detection: MODERATE
+    │   → Mode switches to BALANCED
+    │   → Dispatched to fusion-balanced-agent (Sonnet) ← MID!
+    │   → 15 seconds, $0.02
+    │
+    └── User: "design the database sharding strategy"
+        → Per-prompt detection: COMPLEX
+        → Stays QUALITY, handled by main model (Opus) ← PREMIUM!
+        → 45 seconds, $0.30
+```
+
+**Even on the most complex project, 60-70% of prompts still trigger cheap models.** The project difficulty doesn't matter — EVERY prompt is independently evaluated.
+
+## Model Source
+
+Models come from `.fusion/model-config.json` (created by `/fusion-setup`). The agent DISPATCH includes the model override from config:
+
+```
+ZEN → Task(subagent: "fusion-zen-agent", model: "${config.zen.model}", ...)
+BALANCED → Task(subagent: "fusion-balanced-agent", model: "${config.balanced.model}", ...)
+```
+
+If config not found, use agent file defaults (Haiku/Sonnet/Opus).
 
 ## Dispatch Table
 
