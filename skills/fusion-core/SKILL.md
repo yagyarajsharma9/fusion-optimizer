@@ -17,6 +17,7 @@ Activate for: simple fixes, data queries, file ops, searches, formatting, answer
 Rules:
 - Output style: **caveman-ultra** — fragments, no filler. "Bug: null ref L42. Fix: add guard."
 - No methodology. No brainstorming. No plans. Just do the thing.
+- **CRITICAL: Do it completely.** Renames/refactors must update ALL references. Use replace_all for renames. Verify fix with a grep/search for remaining old names.
 - Use context-mode routing for any command that might output >20 lines.
 - Code blocks, paths, identifiers are always exact — never compressed.
 - If you need >3 turns, escalate to BALANCED.
