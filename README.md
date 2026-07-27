@@ -305,7 +305,48 @@ The developer just codes normally — the plugin silently optimizes every sessio
 
 ---
 
-## Claude Code — Full Feature Support (5/5)
+## 🌐 Cross-Agent Compatibility — Honest Matrix
+
+**Not every feature works on every agent.** Here's the truth:
+
+| Feature | Claude Code | OpenCode | Cursor/Copilot/Windsurf/Cline |
+|---------|------------|----------|-------------------------------|
+| Skills (mode detection, compress, TDD) | ✅ auto-load | ✅ via opencode.json | ✅ via AGENTS.md |
+| Commands (/fusion, /fusion-stats) | ✅ auto-load | ❌ | ❌ |
+| Hook enforcement (tool routing) | ✅ 6 hooks | ✅ 3 hooks (.opencode) | ❌ |
+| **Model routing (auto-switch)** | ✅ subagents | ✅ subagents (Task tool) | ⚠️ Advisory only |
+| Cross-session memory | ✅ .fusion/ | ✅ .fusion/ | ✅ AGENTS.md instructions |
+| Setup wizard (/fusion-setup) | ✅ | ✅ | ✅ (via AGENTS.md) |
+
+### Why Model Routing Is Limited
+
+Model auto-switching uses **subagents with pinned models** — a Claude Code/OpenCode feature. Other agents don't support dispatching subagents with specific models.
+
+| Agent | Model Routing Works? | Why |
+|-------|---------------------|-----|
+| **Claude Code** | ✅ Full | Subagents accept `model:` in frontmatter |
+| **OpenCode** | ✅ Full | Task tool supports model parameter |
+| **Cursor** | ⚠️ Skill-only | AGENTS.md instructs, but no enforcement |
+| **Copilot** | ⚠️ Skill-only | Same — advisory, not enforced |
+| **Windsurf/Cline** | ⚠️ Skill-only | Same — advisory, not enforced |
+
+> **When model routing can't be enforced**: the skill instructions still tell the agent "use cheaper model for simple tasks." The agent follows these instructions as best it can. It works ~80% of the time — same as any prompt-based guidance.
+
+### Universal Features (Work Everywhere)
+
+These use pure markdown — zero runtime dependency:
+
+- ✅ Mode detection rules (ZEN/BALANCED/QUALITY)
+- ✅ Output compression instructions (caveman-lite/ultra)
+- ✅ Anti-patterns (no filler phrases, no verbose explanations)
+- ✅ /compress via LLM instruction
+- ✅ Tool routing warnings (git log → suggest --oneline)
+
+### The Bottom Line
+
+**Skills and instructions work everywhere.** Full hook enforcement needs Claude Code or OpenCode. Model routing enforcement needs Claude Code or OpenCode. For everything else: AGENTS.md provides the same guidance — just without automatic enforcement.
+
+---## Claude Code — Full Feature Support (5/5)
 
 Fusion Optimizer is **built for Claude Code first**. Every feature works:
 
