@@ -1,83 +1,94 @@
 ---
 name: fusion-setup
-description: One-time interactive model configuration wizard. Asks which models to use for ZEN/BALANCED/QUALITY tiers. Saves permanently. Activates on first plugin install or /fusion-setup command.
+description: One-time model config. Choose models for ZEN/BALANCED/QUALITY. Saves permanently. Custom model [4] = type any ID — if not found at runtime, auto-falls back to default.
 ---
 
-# Fusion Setup — Model Configuration Wizard
+# Fusion Setup — Model Configuration
 
-Activate when: user says "/fusion-setup", "setup fusion", "configure models", "accept models", "change model configuration", OR first-run detection injects setup prompt.
+Activate on: "/fusion-setup", "setup fusion", "configure models", "accept models", first-run prompt.
 
 ## Goal
 
-Configure which models Fusion Optimizer uses for each task tier. All answers saved permanently to `.fusion/model-config.json`.
+Pick which models Fusion uses. Saved permanently. Change anytime.
 
-## The 3 Questions (ask one at a time)
+## How Auto + Manual Works (Both)
 
-### Q1: ZEN Tasks (simple fixes, searches, formatting)
-Which model for cheapest work?
 ```
-Current: <read from .fusion/model-config.json, or default>
-Options:
-  [1] claude-haiku-4-5 (Haiku)      ← default (fast, cheap)
-  [2] claude-sonnet-5 (Sonnet)      (mid)
-  [3] claude-opus-4-8 (Opus)        (best, expensive)
-  [4] Custom: type any model ID
+AUTO (default)                          MANUAL (override)
+─────────────                           ─────────────────
+"rename file" → ZEN → Haiku            "@zen rename file" → force ZEN
+"add feature" → BAL → Sonnet           "@quality fix bug" → force QUALITY
+"design arch" → QUAL → Opus            "@balanced" → force BALANCED
 ```
 
-### Q2: BALANCED Tasks (features, refactoring, medium bugs)
-Which model for mid-tier work?
+**Auto switching is always ON.** Manual override is temporary (one prompt only). Both work together — no conflict.
+
+## The Questions (one at a time)
+
+### Q1: ZEN — Simple tasks (fixes, searches, rename, format)
 ```
-Current: <from config or default>
-Options: same format as Q1, default changes to Sonnet
+  [1] claude-haiku-4-5   ← default (fastest, cheapest)
+  [2] claude-sonnet-5     (mid)
+  [3] claude-opus-4-8     (best, expensive)
+  [4] Custom: type any model ID (e.g., "deepseek-chat", "gemini-flash")
+      → If model doesn't exist when I try to use it,
+        I'll auto-fall-back to [1] claude-haiku-4-5.
 ```
 
-### Q3: QUALITY Tasks (architecture, design, complex bugs)
-Which model for premium work?
+### Q2: BALANCED — Feature work (implement, refactor, tests)
 ```
-Current: <from config or default>
-Options: same format, default Opus
-```
-
-### Q4: Main Conversation Model
-Which model for your main Claude Code session?
-```
-Current: <from config or default>
-Options: same format
+  [1] claude-sonnet-5     ← default (balanced)
+  [2] claude-opus-4-8     (premium)
+  [3] claude-haiku-4-5    (cheap)
+  [4] Custom: type any model ID → fallback to [1] if not found
 ```
 
-## Quick Accept
+### Q3: QUALITY — Complex work (design, architecture, debugging)
+```
+  [1] claude-opus-4-8     ← default (best quality)
+  [2] claude-sonnet-5     (mid)
+  [3] claude-fable-5      (deep reasoning)
+  [4] Custom: type any model ID → fallback to [1] if not found
+```
 
-User can say "accept defaults" at any point to skip remaining questions and use defaults.
+## Custom Model [4] — How It Works
 
-## Shortcut Answers
+User types any model ID. System uses it directly. Fallback built in:
+
+```
+User: "use deepseek-chat for ZEN"
+System: ✅ Saved. Will use deepseek-chat for simple tasks.
+        If deepseek-chat isn't available at runtime,
+        I'll fall back to default claude-haiku-4-5.
+
+Later, during a session:
+"fix typo in auth.js" → Try deepseek-chat
+  → Success? ✅ Used deepseek-chat
+  → Not found? ⚠️ "deepseek-chat not available. Using claude-haiku-4-5 instead."
+```
+
+**No complex validation. Just try it, fall back if it fails.**
+
+## Quick Answers
 
 | User says | Action |
 |-----------|--------|
-| "accept defaults" | Skip to save with all defaults |
-| "1" or "haiku" | Select option 1 for current question |
-| "2" or "sonnet" | Select option 2 |
-| "3" or "opus" | Select option 3 |
-| "use gemini" | Custom: gemini/gemini-flash |
-| "use deepseek" | Custom: deepseek/deepseek-chat |
-| Any valid model ID | Set as custom model |
+| "accept defaults" | Skip all questions, use defaults for everything |
+| "1" / "2" / "3" | Select that option |
+| "4 deepseek-chat" | Custom model = deepseek-chat |
+| "use gemini" | Custom = gemini/gemini-flash |
+| "use claude" | Custom = claude-sonnet-5 |
 
-## Save and Confirm
+## Save & Confirm
 
 ```
-✅ Model configuration saved!
+✅ Saved to .fusion/model-config.json
 
-  ZEN:      claude-haiku-4-5 (Haiku)   — 97% cheaper than baseline
-  BALANCED: claude-sonnet-5 (Sonnet)    — 85% cheaper than baseline
-  QUALITY:  claude-opus-4-8 (Opus)     — baseline
-  MAIN:     claude-opus-4-8 (Opus)
+  ZEN:      deepseek-chat (custom) — fallback: claude-haiku-4-5
+  BALANCED: claude-sonnet-5 (default)
+  QUALITY:  claude-opus-4-8 (default)
 
-  Config: .fusion/model-config.json
-  Change anytime: run /fusion-setup again.
-  Models persist across all sessions in this project.
+  Auto-switching: ON by default
+  Manual override: @zen, @quality, @balanced
+  Change anytime: /fusion-setup
 ```
-
-## Important
-
-1. Update `.fusion/model-config.json` file after EVERY answer, not just at end
-2. Set `setup_complete: true` and `setup_date: <ISO date>` when done
-3. Config is project-specific (`.fusion/` in project root). Different projects can have different models.

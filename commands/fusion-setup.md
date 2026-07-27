@@ -1,53 +1,36 @@
-# /fusion-setup — Configure Model Tiers
+# /fusion-setup — Configure Models
 
-Interactive setup wizard for Fusion Optimizer model routing. Run once after install — changes persist permanently.
+Pick which models to use for each task tier. Saved permanently.
 
 ## Usage
 
 /fusion-setup
 
-## What It Does
-
-1. Shows current model configuration
-2. Asks: which model for ZEN tasks (cheap, like Haiku)?
-3. Asks: which model for BALANCED tasks (mid, like Sonnet)?
-4. Asks: which model for QUALITY tasks (best, like Opus)?
-5. Asks: which model for main conversation?
-6. Saves to `.fusion/model-config.json`
-
-## Example
+## How It Works
 
 ```
-You: /fusion-setup
-
-Fusion: Current config:
-  ZEN:     claude-haiku-4-5 (Haiku)
-  BALANCED: claude-sonnet-5 (Sonnet)
-  QUALITY:  claude-opus-4-8 (Opus)
-  MAIN:     claude-opus-4-8 (Opus)
-
-Fusion: ZEN tasks (fixes, searches) → which model?
-  [1] claude-haiku-4-5 (Haiku) ← default
-  [2] claude-sonnet-5 (Sonnet)
-  [3] claude-opus-4-8 (Opus)
-  [4] Custom: type model ID
-
-You: 1
-
-Fusion: BALANCED tasks (features, refactor) → which model?
-  [1] claude-sonnet-5 (Sonnet) ← default
-  ... (same format)
-
-You: 2  (or "accept defaults" to skip remaining)
-
-Fusion: ✅ Configuration saved!
-  ZEN:     claude-haiku-4-5
-  BALANCED: claude-sonnet-5
-  QUALITY:  claude-opus-4-8
-  MAIN:     claude-opus-4-8
-  Models locked. Run /fusion-setup anytime to change.
+AUTO (always on)              MANUAL (override)
+────────────────              ──────────────────
+Simple task → ZEN → Haiku     @zen → force ZEN this prompt
+Feature    → BAL → Sonnet     @quality → force QUALITY
+Complex    → QUAL → Opus      @balanced → force BALANCED
 ```
 
-## Behind the Scenes
+**Auto switching is default.** Manual override works alongside it — no conflict.
 
-Configuration saved as JSON in `.fusion/model-config.json`. Not committed to git (gitignored). Each project can have its own config, or share the global default.
+## Custom Model [4]
+
+Type any model ID. Example: "deepseek-chat", "gemini-flash", "gpt-4o".
+
+If the model doesn't exist at runtime → auto-falls back to default. You get notified.
+
+```
+User: [4] deepseek-chat for ZEN
+Fusion: ✅ Saved. Will try deepseek-chat. If unavailable, falls back to Haiku.
+
+Later session:
+"fix typo" → tries deepseek-chat → not found → uses Haiku instead
+Fusion: ⚠️ "deepseek-chat not available. Used claude-haiku-4-5. /fusion-setup to change."
+```
+
+No complex validation. System tries, catches failure, falls back.

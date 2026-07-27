@@ -46,6 +46,19 @@ BALANCED → Task(subagent: "fusion-balanced-agent", model: "${config.balanced.m
 
 If config not found, use agent file defaults (Haiku/Sonnet/Opus).
 
+## Custom Model Fallback — Simple
+
+If user chose a custom model (e.g., "deepseek-chat") and it doesn't exist when you try to dispatch, the subagent will return an error. Handle it:
+
+```
+Try: dispatch to fusion-zen-agent with model=deepseek-chat
+  → Fails? "Model deepseek-chat not found"
+  → Auto-retry with default: claude-haiku-4-5
+  → Tell user: "deepseek-chat not available. Using Haiku instead. Run /fusion-setup to reconfigure."
+```
+
+**No complex logic. Just try, catch, retry with default, notify user.**
+
 ## Dispatch Table
 
 | Task Complexity | Mode | Agent to Use | Model | Cost vs Opus |
