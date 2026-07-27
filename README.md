@@ -697,18 +697,23 @@ Verified on **Claude Code 2.1.220**, **OpenCode 1.18.7**, **Windows 11**, **Node
 | **Skills** | 10/10 present | ✅ All SKILL.md files found |
 | **Commands** | 7/7 present | ✅ All .md files found |
 | **Agents** | 3/3 present | ✅ All agent definitions found |
-| **Hooks** | 7/7 present | ✅ All hook scripts found |
+| **Hooks** | 7/7 pass | ✅ All hooks functional (posttooluse, userpromptsubmit, precompact fixed) |
 | **Core Libraries** | 5/5 present | ✅ All src/ files found |
 | **Documentation** | 5/5 present | ✅ README, CLAUDE, AGENTS, GEMINI, PROJECT |
 | **PreToolUse Routing** | 4/4 patterns | ✅ git log→--oneline, npm→--silent, pytest→-q, curl→WARN |
+| **PostToolUse** | Exit 0 | ✅ Stats tracking works |
+| **UserPromptSubmit** | Mode detected | ✅ ZEN/BALANCED/QUALITY switching verified |
+| **PreCompact** | Snapshot saved | ✅ Session continuity verified |
+| **Model Router Stats** | JSONL logged | ✅ Subagent dispatch tracking works |
 | **Arbitrator Detection** | 16/16 correct | ✅ TRIVIAL/MODERATE/COMPLEX classification |
 | **Compress Script** | 45% savings | ✅ Code blocks, URLs, inline code protected |
 | **Model Config** | Default config valid | ✅ sessionstart generates setup prompt |
-| **Claude Code Load** | Plugin: `√ enabled` | ✅ Zero errors, 8 skills + 6 commands + 5 hooks loaded |
+| **Claude Code Load** | Plugin: `√ enabled` | ✅ Zero errors, 10 skills + 7 commands + 7 hooks loaded |
 | **OpenCode Plugin** | `.opencode/plugins/` valid | ✅ Agent → 4/5 feature parity |
-| **GitHub Pages** | README renders | ✅ All diagrams visible |
+| **Cross-Agent Test** | `test-cross-agent.js` | ✅ 1 command checks everything |
+| **Bug Fixed** | 3 orphan catch blocks | ✅ SyntaxError resolved in Claude Code cache |
 
-**Last verified**: 2026-07-28 | **Commit**: `80db3d7`
+**Last verified**: 2026-07-28 | **Commit**: `312d236` | **All 7 hooks: zero errors**
 
 ## License
 

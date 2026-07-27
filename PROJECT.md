@@ -442,6 +442,13 @@ opencode run -m deepseek/deepseek-v4-flash "git log"
   claude plugin install fusion-optimizer@fusion-optimizer-marketplace
   ```
 
+### Issue 6: Orphan catch blocks (FIXED — commit 312d236)
+- **Symptom**: posttooluse, userpromptsubmit, precompact throw SyntaxError "Unexpected token '}'"
+- **Root cause**: stdin-helper migration left `} catch { process.exit(0); }` remnants
+- **Impact**: 3 of 7 hooks silently crash in Claude Code
+- **Fix**: Remove orphan catch blocks. All 7 hooks pass now.
+- **Detection**: `node hooks/posttooluse.js` crashes immediately
+
 ---
 
 ## 9. File Count & Size Summary
@@ -528,17 +535,21 @@ Verified on **Claude Code 2.1.220**, **OpenCode 1.18.7**, **Windows 11**, **Node
 | Skills present | 10/10 | ✅ |
 | Commands present | 7/7 | ✅ |
 | Agents present | 3/3 | ✅ |
-| Hook scripts | 7/7 | ✅ |
+| Hook scripts | 7/7 pass | ✅ All hooks functional after orphan catch fix |
 | Core libraries | 5/5 | ✅ |
 | Documentation | 5/5 | ✅ |
 | PreToolUse routing | 4/4 correct | ✅ |
+| PostToolUse | Exit 0 | ✅ |
+| UserPromptSubmit | Mode detected | ✅ |
+| PreCompact | Snapshot saved | ✅ |
 | Arbitrator detection | 16/16 correct | ✅ |
 | Compress savings | 45% | ✅ |
 | Model config | Valid default | ✅ |
 | Claude Code load | `√ enabled`, zero errors | ✅ |
 | OpenCode plugin | `.opencode/plugins/` valid | ✅ |
+| Cross-Agent Test | `test-cross-agent.js` | ✅ |
 
-**Last verified**: 2026-07-28 | **Commit**: `80db3d7`
+**Last verified**: 2026-07-28 | **Commit**: `312d236` | **Bug fixed**: 3 orphan catch blocks removed
 
 ---
 
