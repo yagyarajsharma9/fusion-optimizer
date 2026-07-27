@@ -1,6 +1,22 @@
+# Dependencies — never commit npm packages (professional practice)
 node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build artifacts
 dist/
 *.log
+
+# Environment — never commit secrets
 .env
 .env.*
+!.env.example
+
+# Runtime state — project-specific, never commit
 .fusion/
+*.bak
+
+# OS files
+.DS_Store
+Thumbs.db

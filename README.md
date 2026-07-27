@@ -11,6 +11,27 @@
 
 ---
 
+## ⚠️ Prerequisites — MUST Install Before Use
+
+This plugin is **zero-dependency** — we don't ship packages. You must have these installed on your machine:
+
+| Requirement | Version | Check | Install |
+|------------|---------|-------|---------|
+| **Node.js** | >= 18.x | `node --version` | [nodejs.org](https://nodejs.org) |
+| **Claude Code** | Latest | `claude --version` | [claude.ai/install](https://claude.ai/install) |
+| **Git** | Any | `git --version` | [git-scm.com](https://git-scm.com) |
+
+```bash
+# Verify everything is installed before proceeding:
+node --version    # Must be v18.x or higher
+claude --version  # Must show Claude Code
+git --version     # Must be installed
+```
+
+> **Why no packages in this repo?** Professional plugins don't bundle `node_modules`. Our hooks use only Node.js built-ins (`fs`, `path`). No `npm install` needed. Zero dependencies. Standard practice — same as Caveman, Superpowers, and Claude Code's official plugins.
+
+---
+
 ## The Global Problem
 
 Every coding agent faces the same dilemma:
