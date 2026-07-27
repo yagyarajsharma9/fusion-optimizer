@@ -216,6 +216,43 @@ The developer just codes normally — the plugin silently optimizes every sessio
                                 └────────────────────────────────┘
 ```
 
+### 🧠 Auto Model Routing — Right Model, Right Price
+
+```
+  ┌──────────────────────────────────────────────────────────────┐
+  │              TASK COMPLEXITY DETECTION                        │
+  │  "fix typo"          "add login"         "design migration"   │
+  └──────┬───────────────────┬──────────────────────┬────────────┘
+         │                   │                      │
+  ┌──────▼──────┐     ┌──────▼──────┐        ┌──────▼──────┐
+  │  ZEN MODE   │     │  BALANCED   │        │   QUALITY    │
+  │  Haiku      │     │  Sonnet     │        │    Opus      │
+  │  $0.80/M    │     │  $3/M       │        │   $15/M      │
+  │  ~97% saved │     │  ~85% saved │        │  Baseline    │
+  └──────┬──────┘     └──────┬──────┘        └──────────────┘
+         │                   │
+         │    ┌──────────────┼──────────────┐
+         │    │  DISPATCH SUBAGENTS         │
+         │    │  (parallel when possible)   │
+         │    └──────────────┼──────────────┘
+         │                   │
+  ┌──────▼───────────────────▼──────────────────────────────┐
+  │  MAIN MODEL (Opus) — Only for coordination              │
+  │  • Reviews agent results                                │
+  │  • Handles escalations & failures                       │
+  │  • Architecture decisions only                          │
+  │  • Context: stays clean (agents absorb file I/O)        │
+  └─────────────────────────────────────────────────────────┘
+         │
+  ┌──────▼──────────────────────────────────────────────────┐
+  │  SESSION METRICS — Tracked Automatically                │
+  │  .fusion/model-routing.jsonl                            │
+  │  Agent: fusion-zen-agent | Model: haiku | Mode: ZEN     │
+  └─────────────────────────────────────────────────────────┘
+```
+
+> **How it saves**: Instead of paying Opus ($15/M) to grep files, Fusion dispatches a Haiku subagent ($0.80/M). The subagent reads files in its OWN context and returns only results — raw file contents never enter the main thread. This is **context isolation** + **model tiering** — two separate savings mechanisms that combine multiplicatively.
+
 ### Workspace Effectiveness — Before vs After
 
 ```

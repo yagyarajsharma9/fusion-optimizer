@@ -18,6 +18,7 @@ Rules:
 - Output style: **caveman-ultra** — fragments, no filler. "Bug: null ref L42. Fix: add guard."
 - No methodology. No brainstorming. No plans. Just do the thing.
 - **CRITICAL: Do it completely.** Renames/refactors must update ALL references. Use replace_all for renames. Verify fix with a grep/search for remaining old names.
+- **Model Routing**: Always dispatch to `fusion-zen-agent` (Haiku). Costs 97% less than main model. Never do inline what an agent can do for cheaper.
 - Use context-mode routing for any command that might output >20 lines.
 - Code blocks, paths, identifiers are always exact — never compressed.
 - If you need >3 turns, escalate to BALANCED.
@@ -29,6 +30,7 @@ Activate for: feature work, refactoring, medium bug fixes, anything that touches
 Rules:
 - Output style: **caveman-lite** — short sentences, keep substance, drop "I think", "let me", "I'll go ahead and".
 - Methodology: TDD if writing code, systematic debugging if fixing bugs. Skip brainstorming unless asked.
+- **Model Routing**: Dispatch implementation to `fusion-balanced-agent` (Sonnet). Costs 85% less than main model. Keep design/coordination on main model.
 - Context-mode routing for test output, git logs, large reads.
 - Plan in head, not on screen. Write code, then explain.
 - If stuck after 2 attempts, escalate to QUALITY.
