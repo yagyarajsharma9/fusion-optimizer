@@ -6,12 +6,17 @@
 const fs = require('fs');
 const path = require('path');
 
-const pluginRoot = process.env.CLAUDE_PLUGIN_ROOT || __dirname + '/..';
+const pluginRoot = process.env.CLAUDE_PLUGIN_ROOT || path.resolve(__dirname, '..');
 
 // Initialize fusion state directory
 const fusionDir = path.join(process.cwd(), '.fusion');
-if (!fs.existsSync(fusionDir)) {
-  fs.mkdirSync(fusionDir, { recursive: true });
+try {
+  if (!fs.existsSync(fusionDir)) {
+    fs.mkdirSync(fusionDir, { recursive: true });
+  }
+} catch {
+  // Silently continue — hooks are optional, skills/commands work without them
+  process.exit(0);
 }
 
 // Initialize memory file if not exists

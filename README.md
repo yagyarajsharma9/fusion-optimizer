@@ -351,11 +351,13 @@ Type `@zen`, `@quality`, or `@balanced` to force mode. Check mode in `/fusion` o
 
 ## Requirements
 
-- **Zero dependencies** — pure Node.js. No Python, no Rust, no binary downloads.
-- Node.js >= 18 (for hook scripts)
-- **Primary**: Claude Code (all features, 5/5)
-- Node.js >= 18 (for hook scripts)
-- Other agents (OpenCode, Cursor, Gemini, etc.) — optional, contributions welcome
+| Requirement | Why | What Happens Without It |
+|------------|-----|------------------------|
+| Claude Code | Plugin target | N/A — this is the host |
+| Node.js >= 18 | Hook scripts | Hooks silently skip. **Skills + commands still work.** Plugin still loads. |
+| Git (for install) | Clone marketplace | Install manually by copying `skills/` and `commands/` |
+
+**Graceful degradation**: If Node.js is missing, Fusion Optimizer still works — just without automatic mode detection, tool routing, and stats tracking. The 8 skills and 6 commands (which are the core value) are pure markdown and always work.
 
 ## Contributing
 
