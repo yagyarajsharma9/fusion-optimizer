@@ -46,6 +46,64 @@ Every coding agent faces the same dilemma:
 
 **The solution**: Don't pick sides. Auto-detect the task and use the right approach.
 
+---
+
+## 🔧 Set It and Forget It — 100% Autonomous
+
+**Install once. Fusion Optimizer does everything else automatically.**
+
+The developer just codes normally — the plugin silently optimizes every session behind the scenes. No commands to remember, no modes to switch, nothing to configure.
+
+| What Happens | When | Dev Action Needed |
+|-------------|------|-------------------|
+| Detect project size & set initial mode | Session starts | **Nothing** — automatic |
+| Analyze each prompt & switch mode if needed | Every prompt | **Nothing** — automatic |
+| Escalate to QUALITY mode if stuck | 3+ failures in a row | **Nothing** — automatic |
+| Force ZEN mode to save budget | >80% token budget used | **Nothing** — automatic |
+| Add `--silent` to npm install | Every npm command | **Nothing** — automatic |
+| Add `--oneline -n 30` to git log | Every git command | **Nothing** — automatic |
+| Add `-q --tb=short` to pytest | Every test run | **Nothing** — automatic |
+| Save decisions to cross-session memory | Session ends | **Nothing** — automatic |
+| Reload context from last session | Session starts | **Nothing** — automatic |
+
+**The only 2 things a dev ever does manually (optional):**
+
+| `/compress` | Run once per project | Permanently shrink memory files ~46% |
+| `/fusion-stats` | Run occasionally | See how much money was saved |
+
+> **Compare**: Without Fusion, the dev manually remembers ALL of these — every session, every command, every prompt. With Fusion: zero manual overhead.
+
+### Manual vs Fusion — One Session Comparison
+
+```
+  ┌─────────────────────────────────┐     ┌─────────────────────────────────┐
+  │   DEV WITHOUT FUSION            │     │   DEV WITH FUSION               │
+  ├─────────────────────────────────┤     ├─────────────────────────────────┤
+  │                                 │     │                                 │
+  │  Start session                  │     │  Start session                  │
+  │  → Manually: /caveman on?       │     │  → Auto: BALANCED mode set      │
+  │  → Manually: which methodology? │     │  → Auto: memory loaded          │
+  │                                 │     │                                 │
+  │  "git log"                      │     │  "git log"                      │
+  │  → Output: 500 lines in context │     │  → Auto: git log --oneline -n30 │
+  │                                 │     │                                 │
+  │  "npm install react"            │     │  "npm install react"            │
+  │  → Output: 200 lines of logs    │     │  → Auto: npm install --silent   │
+  │                                 │     │                                 │
+  │  "run the tests"                │     │  "run the tests"                │
+  │  → Output: 800 lines in context │     │  → Auto: pytest -q | tail -30  │
+  │                                 │     │                                 │
+  │  Session ends                   │     │  Session ends                   │
+  │  → Context: lost                │     │  → Auto: saved to .fusion/      │
+  │  → Next session: starts blank   │     │  → Next session: resumes        │
+  │                                 │     │                                 │
+  │  DEV ACTIONS: 5+ manual steps   │     │  DEV ACTIONS: 0                 │
+  │  CONTEXT WASTE: ~3,000 tokens   │     │  CONTEXT WASTE: ~700 tokens     │
+  └─────────────────────────────────┘     └─────────────────────────────────┘
+```
+
+---
+
 ## How Fusion Optimizer Works
 
 ### The Pipeline — Every Request Gets Optimized
@@ -213,13 +271,15 @@ Fusion Optimizer is **built for Claude Code first**. Every feature works:
 
 OpenCode has native hook support via `.opencode/plugins/`. Cursor, Windsurf, Cline, Copilot work via `AGENTS.md`. Contributions to improve other agents welcome — see [Contributing](#contributing).
 
-## Quick Install (30 seconds)
+## Quick Install — One Command, Then Forget It
 
 ### Claude Code (Recommended)
 ```
 /plugin marketplace add yagyarajsharma9/fusion-optimizer
 /plugin install fusion-optimizer@fusion-optimizer-marketplace
 ```
+
+**That's it.** Plugin auto-loads on next session. No config. No setup. No maintenance. You code, it optimizes.
 
 ```bash
 git clone https://github.com/yagyarajsharma9/fusion-optimizer.git
