@@ -1,12 +1,13 @@
-# Fusion Optimizer — Universal Quality + Cost Optimization
+# Fusion Optimizer — Smart Quality + Cost Balance for Claude Code
 
-**One plugin. All agents. Auto-balanced quality and cost for every task.** 
+**Primary target: Claude Code. OpenCode, Cursor, Gemini, and other agents are optionally supported — contributions welcome!**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js >= 18](https://img.shields.io/badge/Node.js-%3E%3D18-green.svg)](https://nodejs.org)
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](package.json)
 
-Works with: Claude Code · Codex · Cursor · Gemini CLI · Windsurf · Cline · Copilot · OpenCode · any AGENTS.md tool
+### 🎯 Built for Claude Code — Full 5/5 Features
+### 🔌 Also works with: OpenCode · Codex · Cursor · Gemini CLI · Windsurf · Cline · Copilot
 
 ---
 
@@ -45,9 +46,32 @@ Every coding agent faces the same dilemma:
 
 ---
 
+## Claude Code — Full Feature Support (5/5)
+
+Fusion Optimizer is **built for Claude Code first**. Every feature works:
+
+| Feature | Status | How |
+|---------|--------|-----|
+| 8 Skills auto-discovery | ✅ | `skills/` dir auto-loaded |
+| 5 lifecycle hooks | ✅ | SessionStart, PreToolUse, PostToolUse, UserPromptSubmit, PreCompact |
+| 22 tool routing patterns | ✅ | Auto-modifies git/npm/pip/test/curl commands |
+| /compress memory files | ✅ | Deterministic 46% savings |
+| /fusion-stats cost report | ✅ | Real-time token/cost estimates |
+| Mode auto-detection | ✅ | SessionStart + per-turn re-evaluation |
+| @zen / @quality / @balanced | ✅ | Instant mode switching |
+| Cross-session memory | ✅ | `.fusion/memory.md` persistence |
+
+### OpenCode & Other Agents (Optional)
+
+OpenCode has native hook support via `.opencode/plugins/`. Cursor, Windsurf, Cline, Copilot work via `AGENTS.md`. Contributions to improve other agents welcome — see [Contributing](#contributing).
+
 ## Quick Install (30 seconds)
 
-### Option 1: Clone + Auto-Install (Recommended)
+### Claude Code (Recommended)
+```
+/plugin marketplace add yagyarajsharma9/fusion-optimizer
+/plugin install fusion-optimizer@fusion-optimizer-marketplace
+```
 
 ```bash
 git clone https://github.com/yagyarajsharma9/fusion-optimizer.git
@@ -329,15 +353,27 @@ Type `@zen`, `@quality`, or `@balanced` to force mode. Check mode in `/fusion` o
 
 - **Zero dependencies** — pure Node.js. No Python, no Rust, no binary downloads.
 - Node.js >= 18 (for hook scripts)
-- Any modern coding agent (Claude Code, Codex, Cursor, Gemini, Windsurf, Cline, Copilot, OpenCode)
+- **Primary**: Claude Code (all features, 5/5)
+- Node.js >= 18 (for hook scripts)
+- Other agents (OpenCode, Cursor, Gemini, etc.) — optional, contributions welcome
 
 ## Contributing
 
+**This plugin is built for Claude Code first.** OpenCode and other agents are supported but may lack some features. We welcome contributions for:
+
+- Cursor plugin hooks (`.cursor-plugin/` integration)
+- Copilot extensions
+- Gemini CLI improvements
+- Windsurf/Cline agent configurations
+- Additional tool routing patterns
+- New compression rules for the `/compress` script
+
+### How to contribute:
 1. Fork the repository
 2. Create a branch for your change
 3. Follow the `fusion-core` skill patterns
 4. Test with `node scripts/compress.js --dry-run`
-5. Submit a PR
+5. Submit a PR — mention which agent you're targeting
 
 ## License
 
