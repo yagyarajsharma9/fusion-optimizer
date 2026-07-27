@@ -1,0 +1,8 @@
+{
+  "name": "fusion-optimizer",
+  "version": "1.0.0",
+  "description": "OpenCode native hooks for Fusion Optimizer — mode arbitration, tool routing, stats tracking",
+  "type": "module",
+  "main": "./plugins/fusion-optimizer.js",
+  "dependencies": {}
+}
