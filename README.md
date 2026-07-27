@@ -46,23 +46,150 @@ Every coding agent faces the same dilemma:
 
 **The solution**: Don't pick sides. Auto-detect the task and use the right approach.
 
-## How Fusion Optimizer Solves It
+## How Fusion Optimizer Works
+
+### The Pipeline — Every Request Gets Optimized
 
 ```
-"Fix the null pointer bug"
-  → Auto-detects: TRIVIAL
-  → Selects: ZEN mode (caveman-ultra output, no methodology)
-  → Result: 65% cheaper, same quality
+                          ┌─────────────────────────────────────────┐
+                          │           YOUR WORKSPACE                │
+                          │   (Claude Code + Fusion Optimizer)      │
+                          └─────────────────────────────────────────┘
+                                          │
+                              ┌───────────┴───────────┐
+                              │   User sends prompt    │
+                              └───────────┬───────────┘
+                                          │
+                          ┌───────────────▼───────────────┐
+                          │   STEP 1: MODE DETECTION      │
+                          │   analyzes prompt complexity   │
+                          │   ┌─────┐ ┌─────┐ ┌─────┐    │
+                          │   │ ZEN │ │ BAL │ │QUAL │    │
+                          │   └──┬──┘ └──┬──┘ └──┬──┘    │
+                          └──────┼───────┼───────┼───────┘
+                                 │       │       │
+              ┌──────────────────┼───────┼───────┼──────────────────┐
+              │                  │       │       │                  │
+    ┌─────────▼─────────┐ ┌──────▼───────▼───────▼──────┐ ┌────────▼─────────┐
+    │  "fix typo"       │ │  "add feature"              │ │  "design system"  │
+    │  "find file"      │ │  "refactor code"            │ │  "new project"    │
+    │  "what is X"      │ │  "fix bug"                  │ │  "migrate to Y"   │
+    └─────────┬─────────┘ └──────────────┬──────────────┘ └────────┬─────────┘
+              │                          │                          │
+    ┌─────────▼─────────┐    ┌───────────▼───────────┐    ┌────────▼─────────┐
+    │    ZEN MODE       │    │    BALANCED MODE      │    │   QUALITY MODE   │
+    │  (cost-optimized) │    │      (default)        │    │  (full method)   │
+    ├───────────────────┤    ├───────────────────────┤    ├──────────────────┤
+    │ Output: fragments │    │ Output: short sent.   │    │ Output: lite     │
+    │ Methods: none     │    │ Methods: TDD + debug  │    │ Methods: ALL     │
+    │ Routing: active   │    │ Routing: large out    │    │ Routing: off     │
+    │ Save: ~65% output │    │ Save: ~40% output     │    │ Save: ~25% out   │
+    └─────────┬─────────┘    └───────────┬───────────┘    └────────┬─────────┘
+              │                          │                          │
+              └──────────────────────────┼──────────────────────────┘
+                                         │
+                          ┌──────────────▼──────────────┐
+                          │  STEP 2: TOOL ROUTING       │
+                          │  (22 patterns, auto-apply)  │
+                          │                             │
+                          │  git log  → --oneline -n 30 │
+                          │  npm test → | tail -30      │
+                          │  pip inst → -q              │
+                          │  curl     → WARN (fetch)    │
+                          │  docker   → -q              │
+                          │  ...17 more patterns        │
+                          └──────────────┬──────────────┘
+                                         │
+                          ┌──────────────▼──────────────┐
+                          │  STEP 3: OUTPUT COMPRESSION │
+                          │  (3 compression levels)     │
+                          │                             │
+                          │  LITE: drop filler phrases  │
+                          │  ULTRA: fragments, symbols  │
+                          │  CODE: one-line review      │
+                          └──────────────┬──────────────┘
+                                         │
+                          ┌──────────────▼──────────────┐
+                          │  STEP 4: MEMORY PERSISTENCE │
+                          │                             │
+                          │  Save to .fusion/memory.md  │
+                          │  Decisions, gotchas, fixes  │
+                          │  Load on next session start │
+                          └──────────────┬──────────────┘
+                                         │
+                          ┌──────────────▼──────────────┐
+                          │      TOKEN SAVINGS          │
+                          │  ┌─────────────────────┐    │
+                          │  │ Input  saved: 30-60% │    │
+                          │  │ Output saved: 25-65% │    │
+                          │  │ Cost   saved: 15-55% │    │
+                          │  └─────────────────────┘    │
+                          └─────────────────────────────┘
+```
 
-"Add OAuth to the API"
-  → Auto-detects: MODERATE
-  → Selects: BALANCED mode (caveman-lite + TDD)
-  → Result: 40% cheaper, higher quality (tested)
+### The Decision Tree — How Mode is Selected
 
-"Design microservice migration"
-  → Auto-detects: COMPLEX
-  → Selects: QUALITY mode (full methodology + compressed output)
-  → Result: 25% cheaper, 60% better quality (better design)
+```
+                    ┌──────────────────────┐
+                    │   USER PROMPT        │
+                    └──────────┬───────────┘
+                               │
+                    ┌──────────▼───────────┐
+                    │ Contains @zen /       │
+                    │ @quality / @balanced? │
+                    └──────┬──────┬────────┘
+                           │YES   │NO
+                    ┌──────▼─┐  ┌─▼─────────────────────────────┐
+                    │ Force  │  │ Analyze prompt with 50+        │
+                    │ mode   │  │ pattern detectors:             │
+                    └────────┘  │                               │
+                                │ Fix typo/rename/delete? → ZEN  │
+                                │ Add/implement/refactor? → BAL  │
+                                │ Design/migrate/system? → QUAL  │
+                                │ 3+ failures in a row?  → QUAL  │
+                                │ >80% token budget?     → ZEN   │
+                                └──────────────┬────────────────┘
+                                               │
+                                ┌──────────────▼────────────────┐
+                                │  [ZEN]  |  [BALANCED]  |  [QUALITY]
+                                │ 65% out |  40% out     |  25% out
+                                │ 60% ctx |  30% ctx     |  15% ctx
+                                │ no meth |  TDD + debug |  full SDLC
+                                └────────────────────────────────┘
+```
+
+### Workspace Effectiveness — Before vs After
+
+```
+ ┌─────────────────────────────────┐   ┌──────────────────────────────────┐
+ │   WITHOUT FUSION OPTIMIZER      │   │    WITH FUSION OPTIMIZER          │
+ ├─────────────────────────────────┤   ├──────────────────────────────────┤
+ │                                 │   │                                  │
+ │  User: "fix the bug in auth"    │   │  User: "@zen fix the bug in auth" │
+ │                                 │   │  → Auto: ZEN mode (TRIVIAL task) │
+ │  Agent: "Sure! Let me look      │   │  → Output: "Bug: null L42. Fix:  │
+ │  at the codebase first. I       │   │    add guard. Verified."         │
+ │  think the issue is probably    │   │  → Tools: git log auto-limited   │
+ │  in the auth middleware. Let     │   │  → Context: no raw logs dumped   │
+ │  me explain what I found..."    │   │  → Tokens: 250 → 85 (-66%)       │
+ │  [300 tokens]                   │   │  → Time: 8s → 3s (-63%)         │
+ │                                 │   │                                  │
+ │  User: "add the login page"     │   │  User: "add the login page"      │
+ │                                 │   │  → Auto: BALANCED (MODERATE)    │
+ │  Agent: "I'll help you build    │   │  → Output: "[BALANCED] Created   │
+ │  the login page. Let me first   │   │    Login.svelte. Tests: 3/3 pass │
+ │  write the tests, then create   │   │    RED→GREEN→REFACTOR ✓"        │
+ │  the component. I recommend     │   │  → Methodology: TDD enforced      │
+ │  using Tailwind for styling..." │   │  → Tools: npm test → redir to    │
+ │  [500 tokens]                   │   │    `| tail -30`, --silent flag   │
+ │                                 │   │  → Tokens: 550 → 330 (-40%)     │
+ │                                 │   │  → Quality: tested, not guessed  │
+ │  ═══════════════════════════════ │   │  ════════════════════════════════ │
+ │  Total: 800 tokens, untested    │   │  Total: 415 tokens, tested       │
+ │  code, subtle bugs likely       │   │  code, methodology enforced       │
+ │  Cost: ~$0.012 (Opus)          │   │  Cost: ~$0.006 (Opus)            │
+ └─────────────────────────────────┘   └──────────────────────────────────┘
+                  48% token reduction + tested code + faster workflow
 ```
 
 ---
