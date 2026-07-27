@@ -1,0 +1,24 @@
+{
+  "_comment": "Fusion Optimizer Model Configuration — edit directly or run /fusion-setup",
+  "zen": {
+    "model": "claude-haiku-4-5",
+    "agent": "fusion-zen-agent",
+    "label": "Haiku (cheapest)"
+  },
+  "balanced": {
+    "model": "claude-sonnet-5",
+    "agent": "fusion-balanced-agent", 
+    "label": "Sonnet (mid-tier)"
+  },
+  "quality": {
+    "model": "claude-opus-4-8",
+    "agent": "fusion-quality-agent",
+    "label": "Opus (best quality)"
+  },
+  "main": {
+    "model": "claude-opus-4-8",
+    "label": "Opus (main conversation)"
+  },
+  "setup_complete": false,
+  "setup_date": null
+}

@@ -68,21 +68,60 @@ const sessionState = {
 
 fs.writeFileSync(path.join(fusionDir, 'session.json'), JSON.stringify(sessionState, null, 2));
 
-// Output for context injection
-const coreSkillPath = path.join(pluginRoot, 'skills', 'fusion-core', 'SKILL.md');
-if (fs.existsSync(coreSkillPath)) {
-  const skillContent = fs.readFileSync(coreSkillPath, 'utf-8');
-  // Truncate to avoid massive context injection — just the essentials
-  const essential = skillContent.split('\n').slice(0, 80).join('\n');
-  process.stdout.write(JSON.stringify({
-    context: `<fusion-state>\nInit mode: ${initialMode}\nProject: ${process.cwd().split('/').pop() || process.cwd().split('\\\\').pop()}\nSkills dir: ${path.join(pluginRoot, 'skills')}\n</fusion-state>`,
-    mode: initialMode,
-  }));
+// === Model Configuration Check ===
+const modelConfigPath = path.join(fusionDir, 'model-config.json');
+const defaultConfigPath = path.join(pluginRoot, 'config', 'model-config.default.json');
+let modelConfig = null;
+let setupNeeded = false;
+
+if (fs.existsSync(modelConfigPath)) {
+  try {
+    modelConfig = JSON.parse(fs.readFileSync(modelConfigPath, 'utf-8'));
+    setupNeeded = !modelConfig.setup_complete;
+  } catch { setupNeeded = true; }
 } else {
-  process.stdout.write(JSON.stringify({
-    context: `<fusion-state>Init mode: ${initialMode}</fusion-state>`,
-    mode: initialMode,
-  }));
+  // First run — copy default config
+  try {
+    if (fs.existsSync(defaultConfigPath)) {
+      fs.copyFileSync(defaultConfigPath, modelConfigPath);
+    }
+  } catch {}
+  setupNeeded = true;
 }
+
+// Build context injection
+let contextBlock = `<fusion-state>
+Init mode: ${initialMode}
+Project: ${process.cwd().split('/').pop() || process.cwd().split('\\\\').pop()}
+</fusion-state>`;
+
+if (setupNeeded) {
+  contextBlock += `
+
+<fusion-setup>
+╔══════════════════════════════════════════════════╗
+║  🚀 FUSION OPTIMIZER — FIRST-TIME SETUP          ║
+╠══════════════════════════════════════════════════╣
+║  Default models selected:                        ║
+║    ZEN     → Haiku  (claude-haiku-4-5)           ║
+║    BALANCED → Sonnet (claude-sonnet-5)            ║
+║    QUALITY → Opus   (claude-opus-4-8)            ║
+╠══════════════════════════════════════════════════╣
+║  To accept defaults: type "accept models"         ║
+║  To change: type "/fusion-setup"                  ║
+║  This setup appears ONCE. After today,            ║
+║  Fusion remembers your choices forever.           ║
+╚══════════════════════════════════════════════════╝
+
+ASK THE USER NOW: "Welcome to Fusion Optimizer! Which
+models would you like me to use? Defaults above — accept
+or customize?"
+</fusion-setup>`;
+}
+
+process.stdout.write(JSON.stringify({
+  context: contextBlock,
+  mode: initialMode,
+}));
 
 process.exit(0);
