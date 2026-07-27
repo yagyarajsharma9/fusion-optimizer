@@ -10,7 +10,6 @@ const args = process.argv.slice(2);
 const { parseStdinEvent } = require(path.join(__dirname, 'stdin-helper.js'));
 const event = parseStdinEvent();
 if (!event) process.exit(0);
-}
 
 const userPrompt = event.prompt || '';
 const fusionDir = path.join(process.cwd(), '.fusion');
