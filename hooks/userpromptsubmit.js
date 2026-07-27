@@ -40,7 +40,7 @@ function detectTaskComplexity(prompt) {
   
   // Trivial
   const trivialPatterns = [
-    /^fix\s+(typo|spelling|comment|format)/, /^rename\s+\w+\s+to\s+\w+/,
+    /^fix\s+(typo|spelling|comment|format)/, /^rename\s+\w+(\s+to\s+\w+)?/,
     /^delete\s+(line|file|comment)/, /^what\s+(is|does|are)/,
     /^where\s+(is|are)/, /^find\s+(all|the|where)/,
     /^show\s+(me|the)/, /^list\s+(all|the)/,
