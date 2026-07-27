@@ -1,0 +1,21 @@
+{
+  "name": "fusion-optimizer",
+  "displayName": "Fusion Optimizer",
+  "description": "Smart quality/cost auto-balance for coding agents. 3 modes: ZEN (cost), BALANCED (default), QUALITY (methodology). Auto-detects task complexity.",
+  "version": "1.0.0",
+  "author": {
+    "name": "yagyarajsharma9",
+    "email": "yagyarajsharma9@gmail.com"
+  },
+  "homepage": "https://github.com/yagyarajsharma9/fusion-optimizer",
+  "repository": "https://github.com/yagyarajsharma9/fusion-optimizer",
+  "license": "MIT",
+  "keywords": [
+    "cost-optimization",
+    "tdd",
+    "compression",
+    "quality",
+    "arbitration"
+  ],
+  "skills": "./skills/"
+}

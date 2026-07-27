@@ -1,0 +1,27 @@
+{
+  "name": "fusion-optimizer",
+  "description": "Universal coding agent plugin — balances quality methodology and cost optimization across Claude Code, Codex, Cursor, Gemini, and AGENTS.md tools. Auto-detects task complexity: ZEN (cost), BALANCED (default), QUALITY (methodology). Includes /compress for permanent memory file compression.",
+  "author": {
+    "name": "yagyarajsharma9",
+    "email": "yagyarajsharma9@gmail.com"
+  },
+  "homepage": "https://github.com/yagyarajsharma9/fusion-optimizer",
+  "repository": "https://github.com/yagyarajsharma9/fusion-optimizer",
+  "license": "MIT",
+  "keywords": [
+    "cost-optimization",
+    "token-savings",
+    "quality",
+    "tdd",
+    "methodology",
+    "arbitration",
+    "context-compression",
+    "output-compression",
+    "universal",
+    "cross-agent",
+    "compression",
+    "memory-compression"
+  ],
+  "hooks": "./hooks/hooks.json",
+  "commands": ["./commands"]
+}

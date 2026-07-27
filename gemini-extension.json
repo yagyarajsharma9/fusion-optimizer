@@ -1,0 +1,6 @@
+{
+  "name": "fusion-optimizer",
+  "description": "Universal coding agent plugin — balances quality methodology and cost optimization. Auto-detects task complexity: ZEN (cost), BALANCED (default), QUALITY (methodology).",
+  "version": "1.0.0",
+  "contextFileName": "GEMINI.md"
+}

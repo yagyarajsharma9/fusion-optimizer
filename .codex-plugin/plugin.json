@@ -1,0 +1,44 @@
+{
+  "name": "fusion-optimizer",
+  "version": "1.0.0",
+  "description": "Universal coding agent plugin — balances quality methodology and cost optimization across Claude Code, Codex, Cursor, Gemini, and AGENTS.md tools. Smart mode arbitration: ZEN (cost), BALANCED (default), QUALITY (methodology).",
+  "author": {
+    "name": "yagyarajsharma9",
+    "email": "yagyarajsharma9@gmail.com",
+    "url": "https://github.com/yagyarajsharma9/fusion-optimizer"
+  },
+  "homepage": "https://github.com/yagyarajsharma9/fusion-optimizer",
+  "repository": "https://github.com/yagyarajsharma9/fusion-optimizer",
+  "license": "MIT",
+  "keywords": [
+    "cost-optimization",
+    "token-savings",
+    "quality",
+    "tdd",
+    "methodology",
+    "arbitration",
+    "context-compression",
+    "output-compression",
+    "universal",
+    "cross-agent",
+    "compression"
+  ],
+  "skills": "./skills/",
+  "hooks": {},
+  "interface": {
+    "displayName": "Fusion Optimizer",
+    "shortDescription": "Smart quality/cost auto-balance — works with any coding agent",
+    "longDescription": "Fusion Optimizer detects task complexity and automatically selects the right balance of quality methodology and cost optimization. ZEN mode for simple tasks (65% token savings), BALANCED for features (40% savings + TDD), QUALITY for architecture (25% savings + full methodology). Works across Claude Code, Codex, Cursor, Gemini, and all AGENTS.md-compatible tools.",
+    "developerName": "yagyarajsharma9",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write", "Interactive"],
+    "defaultPrompt": [
+      "I need to fix a bug in my code.",
+      "Let's build a new feature for this project.",
+      "Help me design the architecture for this system.",
+      "Compress my project memory files to save tokens."
+    ],
+    "websiteURL": "https://github.com/yagyarajsharma9/fusion-optimizer",
+    "brandColor": "#6366f1"
+  }
+}

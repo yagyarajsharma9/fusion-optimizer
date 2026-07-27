@@ -1,0 +1,11 @@
+{
+  "name": "fusion-optimizer-marketplace",
+  "owner": { "name": "Fusion Optimizer" },
+  "plugins": [
+    {
+      "name": "fusion-optimizer",
+      "source": "./",
+      "description": "Unified quality + cost optimization plugin with smart mode arbitration"
+    }
+  ]
+}
