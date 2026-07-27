@@ -506,6 +506,12 @@ Say "hello" or "what mode am I in" — Fusion should respond with `[BALANCED]` p
 
 ## Testing
 
+### Cross-Agent Compatibility Test (1 command)
+```bash
+node scripts/test-cross-agent.js
+```
+Checks: plugin files, installed agents, runtime, feature availability per agent.
+
 ### Test Compress Script
 ```bash
 node scripts/compress.js --dry-run    # See what would be compressed
